@@ -1,0 +1,131 @@
+.paymentWrapper {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.paymentCard {
+  padding: 36px;
+  text-align: center;
+}
+
+.paymentHeader {
+  margin-bottom: 28px;
+}
+
+.methodBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 16px;
+}
+
+.paymentTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.paymentOrderId {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-family: monospace;
+}
+
+.qrSection {
+  margin: 24px 0;
+}
+
+.qrCode {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qrGrid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 3px;
+  width: 100%;
+  height: 100%;
+}
+
+.qrDot {
+  border-radius: 2px;
+  aspect-ratio: 1;
+}
+
+.qrOverlay {
+  position: absolute;
+  font-size: 2rem;
+  background: white;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.qrText {
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.amountSection {
+  margin: 20px 0;
+  padding: 20px;
+  background: var(--bg-input);
+  border-radius: var(--radius-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.amountLabel {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.amountValue {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.timerSection {
+  margin-bottom: 24px;
+}
+
+.timerBar {
+  width: 100%;
+  height: 4px;
+  background: var(--bg-input);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.timerProgress {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 1s linear;
+}
+
+.timerText {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
