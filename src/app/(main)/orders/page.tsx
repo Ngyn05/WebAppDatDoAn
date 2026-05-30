@@ -3,16 +3,22 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { formatPrice } from '@/lib/mock-data'
+import { createClient } from '@/lib/supabase/client'
 import styles from './orders.module.css'
 
-interface MockOrder {
+interface OrderItem {
   id: string
-  items_count: number
+  quantity: number
+}
+
+interface DBOrder {
+  id: string
   total_amount: number
   order_status: string
   payment_method: string
   payment_status: string
   created_at: string
+  order_items?: OrderItem[]
 }
 
 const STATUS_MAP: Record<string, { label: string; class: string }> = {
@@ -30,32 +36,39 @@ const PAYMENT_MAP: Record<string, string> = {
 }
 
 export default function OrdersPage() {
-  const [orders, setOrders] = useState<MockOrder[]>([])
+  const [orders, setOrders] = useState<DBOrder[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Simulate loading from DB
-    setTimeout(() => {
-      // Check if there's a recent order in sessionStorage
-      const recentOrder = sessionStorage.getItem('current_order')
-      const mockOrders: MockOrder[] = []
-      
-      if (recentOrder) {
-        const parsed = JSON.parse(recentOrder)
-        mockOrders.push({
-          id: parsed.id,
-          items_count: parsed.items?.length || 0,
-          total_amount: parsed.total_amount,
-          order_status: 'confirmed',
-          payment_method: parsed.payment_method || 'cod',
-          payment_status: 'paid',
-          created_at: parsed.created_at || new Date().toISOString(),
-        })
-      }
+    async function fetchOrders() {
+      try {
+        const supabase = createClient()
+        const { data: { user } } = await supabase.auth.getUser()
+        
+        if (!user) {
+          setOrders([])
+          setLoading(false)
+          return
+        }
 
-      setOrders(mockOrders)
-      setLoading(false)
-    }, 800)
+        const { data, error } = await supabase
+          .from('orders')
+          .select('*, order_items(id, quantity)')
+          .order('created_at', { ascending: false })
+
+        if (error) {
+          console.error('Error fetching orders:', error)
+        } else {
+          setOrders(data || [])
+        }
+      } catch (err) {
+        console.error('Failed to fetch orders:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchOrders()
   }, [])
 
   return (
@@ -105,7 +118,7 @@ export default function OrdersPage() {
                   <div className="divider" />
                   <div className={styles.orderBody}>
                     <div className={styles.orderInfo}>
-                      <span>📦 {order.items_count} món</span>
+                      <span>📦 {order.order_items ? order.order_items.reduce((sum, item) => sum + item.quantity, 0) : 0} món</span>
                       <span>{PAYMENT_MAP[order.payment_method] || order.payment_method}</span>
                     </div>
                     <div className={styles.orderTotal}>
