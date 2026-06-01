@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { MOCK_MENU, CATEGORIES, FOOD_GRADIENTS, FOOD_EMOJIS, formatPrice } from '@/lib/mock-data'
 import { useCartStore } from '@/store/cart-store'
 import { showToast } from '@/components/Toast'
@@ -8,12 +8,30 @@ import { MenuItem } from '@/types'
 import styles from './menu.module.css'
 
 export default function MenuPage() {
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([])
+  const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
   const addItem = useCartStore((s) => s.addItem)
 
+  useEffect(() => {
+    async function fetchMenu() {
+      try {
+        const response = await fetch('/api/menu')
+        const data = await response.json()
+        setMenuItems(data)
+      } catch (err) {
+        console.error('Failed to fetch menu:', err)
+        setMenuItems(MOCK_MENU)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchMenu()
+  }, [])
+
   const filteredItems = useMemo(() => {
-    let items = MOCK_MENU
+    let items = menuItems
     
     if (activeCategory !== 'all') {
       items = items.filter((item) => item.category === activeCategory)
@@ -29,7 +47,7 @@ export default function MenuPage() {
     }
     
     return items
-  }, [searchQuery, activeCategory])
+  }, [searchQuery, activeCategory, menuItems])
 
   const handleAddToCart = (item: MenuItem) => {
     addItem({
@@ -86,7 +104,24 @@ export default function MenuPage() {
         </div>
 
         {/* Menu Grid */}
-        {filteredItems.length === 0 ? (
+        {loading ? (
+          <div className={styles.menuGrid}>
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className={`card ${styles.menuCard}`} style={{ minHeight: 320 }}>
+                <div className="skeleton" style={{ height: 160, width: '100%' }} />
+                <div className={styles.menuCardBody}>
+                  <div className="skeleton" style={{ height: 24, width: '70%', marginBottom: 12 }} />
+                  <div className="skeleton" style={{ height: 16, width: '90%', marginBottom: 8 }} />
+                  <div className="skeleton" style={{ height: 16, width: '50%', marginBottom: 20 }} />
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div className="skeleton" style={{ height: 20, width: '40%' }} />
+                    <div className="skeleton" style={{ height: 32, width: '30%', borderRadius: 8 }} />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : filteredItems.length === 0 ? (
           <div className={styles.emptyState}>
             <span className={styles.emptyEmoji}>😕</span>
             <h3>Không tìm thấy món ăn</h3>

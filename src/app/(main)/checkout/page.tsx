@@ -134,7 +134,23 @@ export default function CheckoutPage() {
         clearCart()
         router.push('/payment/success?method=cod')
       } else {
-        router.push(`/payment?method=${paymentMethod}`)
+        // [US-06] Call API to get payment redirect URL
+        const payResponse = await fetch('/api/pay', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            order_id: createdOrder.id,
+            amount: total,
+            payment_method: paymentMethod,
+          }),
+        })
+        
+        const payData = await payResponse.json()
+        if (!payResponse.ok) {
+          throw new Error(payData.error || 'Khởi tạo cổng thanh toán thất bại')
+        }
+        
+        router.push(payData.payUrl)
       }
     } catch (err: any) {
       alert(err.message || 'Đã xảy ra lỗi khi tạo đơn hàng. Bạn đã đăng nhập chưa?')
