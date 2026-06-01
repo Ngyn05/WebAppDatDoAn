@@ -153,7 +153,7 @@ function PaymentContent() {
               {processing ? (
                 <><span className="spinner" style={{ width: 20, height: 20, borderWidth: 2 }} /> Đang xử lý thanh toán...</>
               ) : (
-                `✅ Giả lập thanh toán thành công`
+                `✅ Xác nhận đã thanh toán`
               )}
             </button>
 

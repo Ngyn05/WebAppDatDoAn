@@ -23,7 +23,7 @@ interface DBOrder {
 
 const STATUS_MAP: Record<string, { label: string; class: string }> = {
   pending: { label: 'Chờ xác nhận', class: 'badge-warning' },
-  confirmed: { label: 'Đã xác nhận', class: 'badge-primary' },
+  confirmed: { label: 'Chờ giao hàng', class: 'badge-primary' },
   delivering: { label: 'Đang giao', class: 'badge-primary' },
   done: { label: 'Hoàn thành', class: 'badge-success' },
   cancelled: { label: 'Đã hủy', class: 'badge-error' },

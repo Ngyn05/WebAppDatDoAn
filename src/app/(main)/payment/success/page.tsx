@@ -54,7 +54,7 @@ function PaymentSuccessContent() {
             <div className={styles.infoBox}>
               <div className={styles.infoRow}>
                 <span>📦 Trạng thái</span>
-                <span className="badge badge-success">Đã xác nhận</span>
+                <span className="badge badge-primary">Chờ giao hàng</span>
               </div>
               <div className={styles.infoRow}>
                 <span>⏰ Dự kiến giao</span>
