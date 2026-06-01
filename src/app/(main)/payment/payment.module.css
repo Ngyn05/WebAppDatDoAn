@@ -1,131 +1,300 @@
 .paymentWrapper {
-  max-width: 480px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 30px 10px;
+  animation: fadeIn 0.4s ease;
 }
 
 .paymentCard {
-  padding: 36px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+}
+
+/* Header style based on payment method */
+.gatewayHeader {
+  padding: 24px;
   text-align: center;
-}
-
-.paymentHeader {
-  margin-bottom: 28px;
-}
-
-.methodBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 16px;
-  border-radius: var(--radius-full);
-  font-size: 0.85rem;
-  font-weight: 700;
   color: white;
-  margin-bottom: 16px;
+  position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.paymentTitle {
+.momoHeader {
+  background: linear-gradient(135deg, #A50064 0%, #d80083 100%);
+}
+
+.zalopayHeader {
+  background: linear-gradient(135deg, #008FE5 0%, #00b0ff 100%);
+}
+
+.logoArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.logoCircle {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.gatewayTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Split layout */
+.gatewayBody {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+  padding: 32px;
+}
+
+@media (max-width: 768px) {
+  .gatewayBody {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+}
+
+/* Left panel: Info & Guide */
+.infoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.merchantBox {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+
+.merchantRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+  font-size: 0.95rem;
+}
+
+.merchantRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.merchantRow:first-child {
+  padding-top: 0;
+}
+
+.label {
+  color: var(--text-secondary);
+}
+
+.value {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.amountBig {
   font-size: 1.5rem;
   font-weight: 800;
-  margin-bottom: 4px;
 }
 
-.paymentOrderId {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  font-family: monospace;
+/* Steps Guide */
+.guideBox {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
+.guideTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stepList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stepItem {
+  display: flex;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.stepNumber {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+/* Right panel: QR Code & Timer */
 .qrSection {
-  margin: 24px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 30px 20px;
+  position: relative;
+}
+
+.qrContainer {
+  position: relative;
+  background: white;
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.qrFrameCorner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 3px solid transparent;
+}
+
+.topLeft {
+  top: 6px;
+  left: 6px;
+  border-top-color: inherit;
+  border-left-color: inherit;
+}
+
+.topRight {
+  top: 6px;
+  right: 6px;
+  border-top-color: inherit;
+  border-right-color: inherit;
+}
+
+.bottomLeft {
+  bottom: 6px;
+  left: 6px;
+  border-bottom-color: inherit;
+  border-left-color: inherit;
+}
+
+.bottomRight {
+  bottom: 6px;
+  right: 6px;
+  border-bottom-color: inherit;
+  border-right-color: inherit;
 }
 
 .qrCode {
-  width: 200px;
-  height: 200px;
-  margin: 0 auto;
-  background: white;
-  border-radius: var(--radius-lg);
-  padding: 16px;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.qrGrid {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 3px;
-  width: 100%;
-  height: 100%;
-}
-
-.qrDot {
-  border-radius: 2px;
-  aspect-ratio: 1;
-}
-
-.qrOverlay {
+.qrLogo {
   position: absolute;
-  font-size: 2rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
   background: white;
-  width: 48px;
-  height: 48px;
+  padding: 3px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .qrText {
-  margin-top: 16px;
   font-size: 0.9rem;
   color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: 16px;
 }
 
-.amountSection {
-  margin: 20px 0;
-  padding: 20px;
-  background: var(--bg-input);
-  border-radius: var(--radius-md);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.amountLabel {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-}
-
-.amountValue {
-  font-size: 1.5rem;
-  font-weight: 800;
-}
-
-.timerSection {
-  margin-bottom: 24px;
+/* Timer styles */
+.timerBox {
+  width: 100%;
+  text-align: center;
 }
 
 .timerBar {
   width: 100%;
-  height: 4px;
-  background: var(--bg-input);
-  border-radius: 2px;
+  height: 6px;
+  background: rgba(255,255,255,0.06);
+  border-radius: var(--radius-full);
   overflow: hidden;
   margin-bottom: 8px;
 }
 
 .timerProgress {
   height: 100%;
-  border-radius: 2px;
+  border-radius: var(--radius-full);
   transition: width 1s linear;
 }
 
 .timerText {
   font-size: 0.85rem;
   color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Footer / Actions */
+.gatewayFooter {
+  padding: 24px 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .gatewayFooter {
+    padding: 20px;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
