@@ -135,9 +135,18 @@ export default function MenuPage() {
                   className={styles.menuCardImage}
                   style={{ background: FOOD_GRADIENTS[item.category] || FOOD_GRADIENTS.com }}
                 >
-                  <span className={styles.menuCardEmoji}>
-                    {FOOD_EMOJIS[item.id] || '🍽️'}
-                  </span>
+                  {item.image_url ? (
+                    <img
+                      className={styles.menuCardImg}
+                      src={item.image_url}
+                      alt={item.name}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <span className={styles.menuCardEmoji}>
+                      {FOOD_EMOJIS[item.id] || '🍽️'}
+                    </span>
+                  )}
                   <div className={styles.menuCardCategory}>
                     {CATEGORIES.find((c) => c.id === item.category)?.name}
                   </div>

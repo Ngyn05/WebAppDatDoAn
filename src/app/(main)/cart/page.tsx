@@ -71,9 +71,18 @@ export default function CartPage() {
                       className={styles.itemImage}
                       style={{ background: gradient }}
                     >
-                      <span className={styles.itemEmoji}>
-                        {FOOD_EMOJIS[item.id] || '🍽️'}
-                      </span>
+                      {item.image_url ? (
+                        <img
+                          className={styles.itemImg}
+                          src={item.image_url}
+                          alt={item.name}
+                          loading="lazy"
+                        />
+                      ) : (
+                        <span className={styles.itemEmoji}>
+                          {FOOD_EMOJIS[item.id] || '🍽️'}
+                        </span>
+                      )}
                     </div>
                     <div className={styles.itemInfo}>
                       <h3 className={styles.itemName}>{item.name}</h3>
